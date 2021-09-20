@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Repeat num_cycles="{num_cycles}">
+            <Sequence>
+                <Fallback>
+                    <Action ID="LTLPreCheck" ltl_state_current="{ltl_state_current}" ltl_state_desired_sequence="{ltl_state_desired_sequence}"/>
+                    <ForceFailure>
+                        <Action ID="Replanning2"/>
+                    </ForceFailure>
+                </Fallback>
+                <ReactiveSequence>
+                    <Fallback>
+                        <Action ID="LocomotionStatusCheck"/>
+                        <Timeout msec="">
+                            <Sequence>
+                                <Action ID="RecoveryStand"/>
+                                <Action ID="LocomotionStart"/>
+                            </Sequence>
+                        </Timeout>
+                        <ForceFailure>
+                            <Action ID="Replanning3"/>
+                        </ForceFailure>
+                    </Fallback>
+                    <Fallback>
+                        <Action ID="MoveAction" action="{action}" move_base_finished="{move_base_finished}" move_base_idle="{move_base_idle}" nav_goal="{nav_goal}"/>
+                        <ForceFailure>
+                            <Action ID="Replanning3"/>
+                        </ForceFailure>
+                    </Fallback>
+                </ReactiveSequence>
+                <Action ID="UpdateLTL" action_sequence="{action_sequence}" ltl_state_desired_sequence="{ltl_state_desired_sequence}" nav_goal="{nav_goal}"/>
+            </Sequence>
+        </Repeat>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="LTLPreCheck">
+            <input_port name="ltl_state_current"/>
+            <input_port name="ltl_state_desired_sequence"/>
+        </Action>
+        <Action ID="LocomotionStart"/>
+        <Action ID="LocomotionStatusCheck"/>
+        <Action ID="MoveAction">
+            <output_port name="action"/>
+            <input_port name="move_base_finished"/>
+            <input_port name="move_base_idle"/>
+            <input_port name="nav_goal"/>
+        </Action>
+        <Action ID="RecoveryStand"/>
+        <Action ID="Replanning2"/>
+        <Action ID="Replanning3"/>
+        <Action ID="UpdateLTL">
+            <inout_port name="action_sequence"/>
+            <inout_port name="ltl_state_desired_sequence"/>
+            <output_port name="nav_goal"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+

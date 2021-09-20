@@ -1,0 +1,3 @@
+# hard_task: "(<> loaded_assembly) && ([]<> unloaded)"
+hard_task: "(<> r4) && (<> r5) && (<> r6)"
+soft_task: ""

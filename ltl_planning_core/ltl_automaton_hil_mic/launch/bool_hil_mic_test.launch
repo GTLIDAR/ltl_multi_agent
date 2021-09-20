@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="initial_ts_state_from_agent" default="False"/>
+  <arg name="agent_name" default="nexus"/>
+  
+  <param name="agent_name" type="string" value="$(arg agent_name)" />
+  <!-- hard and soft task parameters -->
+  <rosparam command="load" file="$(find ltl_automaton_planner)/config/test_ltl_formula.yaml" />
+  <param name="initial_beta" value="1000" />
+  <!-- Transition system -->
+  <param name="transition_system_textfile" type="str" textfile="$(find ltl_automaton_planner)/config/test_ts.yaml" />
+
+  <!-- Run LTL planner node -->
+  <include file="$(find ltl_automaton_planner)/launch/ltl_planner.launch" >
+    <arg name="initial_ts_state_from_agent" default="False"/>
+  </include>
+  <group ns="ltl_planner/plugin">
+      <group ns="TrapDetectionPlugin">
+          <param name="path" value="ltl_automaton_hil_mic.trap_detection"/>
+          <param name="args" value=""/>
+      </group>
+  </group>
+
+  <!-- Run HIL nodes -->
+  <node name="bool_cmd_mixer" pkg="ltl_automaton_hil_mic" type="bool_cmd_mix_initiative_controller.py" output="screen" >
+    <param name="state_dimension_name" value="nexus_load" />
+    <param name="monitored_action" value="pick" />
+  </node>
+
+  <!-- Run dynamic parameter node -->
+  <node name="dynamic_parameter" pkg="ltl_automaton_planner" type="dynamic_parameter_node.py" output="screen">
+  </node>
+  
+</launch>

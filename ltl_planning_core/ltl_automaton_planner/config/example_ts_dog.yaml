@@ -1,0 +1,148 @@
+# TS definitions are to be interpreted by the agent node. The LTL core planner only uses the node names, connections, weights, and action names to build its automaton.
+#
+# Possible TS types:
+#   3d_pose_region (3D pose [[x,y,z], [x,y,z,w]] with quaternion orientation)
+#   2d_pose_region (2D pose [[x,y], phi] with euler angle orientation)
+#   3d_point_region (3D point [x, y, z] without orientation)
+#   2d_point_region (2D point [x, y] without orientation)
+#   turtlebot_load
+
+#state_dim: ["2d_pose_region", "turtlebot_load"]
+state_dim: ["2d_pose_region"]
+state_models:
+  2d_pose_region:
+    ts_type: "2d_pose_region"
+    initial: "r3"
+    nodes:
+      r1:
+        attr:
+          type: "square"
+          pose: [[0,0], [0]]
+          length: 2
+          hysteresis: 0.05
+        connected_to:
+          r1: "stay"
+          r2: "goto_r2"
+      #                    r3: "goto_r3"
+      r2:
+        attr:
+          type: "square"
+          pose: [[0,5], [0]]
+          length: 2
+          hysteresis: 0.05
+        connected_to:
+          r1: "goto_r1"
+          r2: "stay"
+          r3: "goto_r3"
+      r3:
+        attr:
+          type: "square"
+          pose: [[0,11], [0]]
+          length: 2
+          hysteresis: 0.05
+        connected_to:
+          r2: "goto_r2"
+          r3: "stay"
+          r4: "goto_r4"
+      r4:
+        attr:
+          type: "square"
+          pose: [ [ -9,0 ], [ 0 ] ]
+          length: 2
+          hysteresis: 0.05
+        connected_to:
+#          r2: "goto_r2"
+          r3: "goto_r3"
+          r4: "stay"
+#          r4: "goto_r4"
+#          r6: "goto_r6"
+      r5:
+        attr:
+          type: "square"
+          pose: [ [ -9,5 ], [ 0 ] ]
+          length: 1.5
+          hysteresis: 0.05
+        connected_to:
+          r2: "goto_r2"
+          r5: "goto_r5"
+      r6:
+        attr:
+          type: "square"
+          pose: [ [ -9,11 ], [ 0 ] ]
+          length: 1.5
+          hysteresis: 0.05
+        connected_to:
+          r4: "goto_r4"
+          r6: "goto_r6"
+#    turtlebot_load:
+#        ts_type: "turtlebot_load"
+#        initial: "unloaded"
+#        nodes:
+#            unloaded:
+#                connected_to:
+#                    loaded: "pick"
+#            loaded:
+#                connected_to:
+#                    unloaded: "drop"
+
+actions:
+  goto_r1:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r1
+      pose: [[0,0,0], [0,0,0,1]]
+  goto_r2:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r2
+      pose: [[0,5,0], [0,0,0,1]]
+  goto_r3:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r3
+      pose: [[0,11,0], [0,0,0,1]]
+  goto_r4:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r4
+      pose: [ [ -9,0,0 ], [ 0,0,0,1 ] ]
+  goto_r5:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r5
+      pose: [ [ -9,5,0 ], [ 0,0,0,1 ] ]
+  goto_r6:
+    type: "move"
+    weight: 10
+    guard: "1"
+    attr:
+      region: r5
+      pose: [ [ -9,11,0 ], [ 0,0,0,1 ] ]
+  stay:
+    type: "stay"
+    guard: "1"
+    weight: 0
+  synchronized_transition:
+    type: "synchronized_transition"
+    guard: "1"
+    weight: 0
+#  pick:
+#      type: "turtlebot_pick"
+#      guard: "r2"
+#      weight: 10
+#  drop:
+#      type: "turtlebot_drop"
+#    guard: "r2"
+#    weight: 10
+
+

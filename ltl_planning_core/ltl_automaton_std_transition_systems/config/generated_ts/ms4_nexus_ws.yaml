@@ -1,0 +1,482 @@
+actions:
+  goto_r1:
+    attr:
+      pose:
+      - - -0.9
+        - -2.07
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r10:
+    attr:
+      pose:
+      - - 1.5
+        - -1.47
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r11:
+    attr:
+      pose:
+      - - -0.9
+        - -0.87
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r12:
+    attr:
+      pose:
+      - - -0.3
+        - -0.87
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r13:
+    attr:
+      pose:
+      - - 0.3
+        - -0.87
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r14:
+    attr:
+      pose:
+      - - 0.9
+        - -0.87
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r15:
+    attr:
+      pose:
+      - - 1.5
+        - -0.87
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r2:
+    attr:
+      pose:
+      - - -0.3
+        - -2.07
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r3:
+    attr:
+      pose:
+      - - 0.3
+        - -2.07
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r4:
+    attr:
+      pose:
+      - - 0.9
+        - -2.07
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r5:
+    attr:
+      pose:
+      - - 1.5
+        - -2.07
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r6:
+    attr:
+      pose:
+      - - -0.9
+        - -1.47
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r7:
+    attr:
+      pose:
+      - - -0.3
+        - -1.47
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r8:
+    attr:
+      pose:
+      - - 0.3
+        - -1.47
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_r9:
+    attr:
+      pose:
+      - - 0.9
+        - -1.47
+        - 0
+      - - 0
+        - 0
+        - 0
+        - 1
+      region: r2
+    type: move
+    weight: 10
+  goto_s0:
+    attr:
+      pose:
+      - - 0.3
+        - -2.07
+        - 0
+      - - 0.0
+        - 0.0
+        - 0.0
+        - 1.0
+      region: s0
+    type: move
+    weight: 10
+  goto_s1:
+    attr:
+      pose:
+      - - 0.9
+        - -2.07
+        - 0
+      - - 0.0
+        - 0.0
+        - 0.0
+        - 1.0
+      region: s1
+    type: move
+    weight: 10
+  goto_s2:
+    attr:
+      pose:
+      - - 1.5
+        - -0.87
+        - 0
+      - - 0.0
+        - 0.0
+        - 0.999999998926914
+        - 4.632679487995776e-05
+      region: s2
+    type: move
+    weight: 10
+state_dim:
+- 2d_pose_region
+state_models:
+  2d_pose_region:
+    initial: ''
+    nodes:
+      r1:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.9
+            - -2.07
+          - - 0
+          type: square
+        connected_to:
+          r2: goto_r2
+          r6: goto_r6
+      r10:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 1.5
+            - -1.47
+          - - 0
+          type: square
+        connected_to:
+          r11: goto_r11
+          r15: goto_r15
+          r5: goto_r5
+          r9: goto_r9
+      r11:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.9
+            - -0.87
+          - - 0
+          type: square
+        connected_to:
+          r10: goto_r10
+          r12: goto_r12
+          r6: goto_r6
+      r12:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.3
+            - -0.87
+          - - 0
+          type: square
+        connected_to:
+          r11: goto_r11
+          r13: goto_r13
+          r7: goto_r7
+      r13:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.3
+            - -0.87
+          - - 0
+          type: square
+        connected_to:
+          r12: goto_r12
+          r14: goto_r14
+          r8: goto_r8
+      r14:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.9
+            - -0.87
+          - - 0
+          type: square
+        connected_to:
+          r13: goto_r13
+          r15: goto_r15
+          r9: goto_r9
+      r15:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 1.5
+            - -0.87
+          - - 0
+          type: square
+        connected_to:
+          r10: goto_r10
+          r14: goto_r14
+          s2: goto_s2
+      r2:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.3
+            - -2.07
+          - - 0
+          type: square
+        connected_to:
+          r1: goto_r1
+          r3: goto_r3
+          r7: goto_r7
+      r3:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.3
+            - -2.07
+          - - 0
+          type: square
+        connected_to:
+          r2: goto_r2
+          r4: goto_r4
+          r8: goto_r8
+          s0: goto_s0
+      r4:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.9
+            - -2.07
+          - - 0
+          type: square
+        connected_to:
+          r3: goto_r3
+          r5: goto_r5
+          r9: goto_r9
+          s1: goto_s1
+      r5:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 1.5
+            - -2.07
+          - - 0
+          type: square
+        connected_to:
+          r10: goto_r10
+          r4: goto_r4
+          r6: goto_r6
+      r6:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.9
+            - -1.47
+          - - 0
+          type: square
+        connected_to:
+          r1: goto_r1
+          r11: goto_r11
+          r5: goto_r5
+          r7: goto_r7
+      r7:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - -0.3
+            - -1.47
+          - - 0
+          type: square
+        connected_to:
+          r12: goto_r12
+          r2: goto_r2
+          r6: goto_r6
+          r8: goto_r8
+      r8:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.3
+            - -1.47
+          - - 0
+          type: square
+        connected_to:
+          r13: goto_r13
+          r3: goto_r3
+          r7: goto_r7
+          r9: goto_r9
+      r9:
+        attr:
+          hysteresis: 0.15
+          length: 0.6
+          pose:
+          - - 0.9
+            - -1.47
+          - - 0
+          type: square
+        connected_to:
+          r10: goto_r10
+          r14: goto_r14
+          r4: goto_r4
+          r8: goto_r8
+      s0:
+        attr:
+          angle_hysteresis: 0.018
+          angle_tolerance: 0.09
+          dist_hysteresis: 0.025
+          pose:
+          - - 0.3
+            - -2.07
+          - - 0.0
+          radius: 0.05
+          type: station
+        connected_to:
+          r3: goto_r3
+      s1:
+        attr:
+          angle_hysteresis: 0.018
+          angle_tolerance: 0.09
+          dist_hysteresis: 0.025
+          pose:
+          - - 0.9
+            - -2.07
+          - - 0.0
+          radius: 0.05
+          type: station
+        connected_to:
+          r4: goto_r4
+      s2:
+        attr:
+          angle_hysteresis: 0.018
+          angle_tolerance: 0.09
+          dist_hysteresis: 0.025
+          pose:
+          - - 1.5
+            - -0.87
+          - - 3.1415
+          radius: 0.05
+          type: station
+        connected_to:
+          r15: goto_r15
+    ts_type: 2d_pose_region

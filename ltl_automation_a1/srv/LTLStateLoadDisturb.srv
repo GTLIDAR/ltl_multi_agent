@@ -1,0 +1,3 @@
+int16 request               #1: add disturbance for load state in LTL
+---
+int16 result				#0:success, -1:false

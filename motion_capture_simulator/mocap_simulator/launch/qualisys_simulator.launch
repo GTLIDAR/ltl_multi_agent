@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="mocap_simulator"
+    type="mocap_simulator_node.py"
+    name="qualisys"
+    output="screen">
+    <param name="frame_rate" value="0"/>
+    <param name="publish_tf" value="true"/>
+    <param name="fixed_frame_id" value="odom"/>
+    <rosparam param="model_list">[]</rosparam>
+  </node>
+</launch>

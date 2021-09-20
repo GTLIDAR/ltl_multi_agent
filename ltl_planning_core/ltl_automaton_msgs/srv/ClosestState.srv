@@ -1,0 +1,24 @@
+# Message definition for closest state service.
+# Server node is a TS state monitor and returns
+# what would be closest state if a given input 
+# would be given to the agent.
+# If appropriate, returns a metric value (ex:
+# euclidian distance to closest region)
+#
+# For closest state where agent input does not matter
+# (for example for 2D pose region where agent pose
+# feedback is used instead of input), leave request
+# field empty
+
+# Action name
+# (can be empty if not needed)
+string action_input
+
+---
+
+# Closest state
+string closest_state
+
+# Associated metric
+# (can be empty if not needed)
+float64 metric

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Arguments -->
+    <arg name="initial_ts_state_from_agent" default="False"/>
+    <!--   <arg name="num_mobile" default=1/> -->
+    <!--   <arg name="num_quadruped" default=1/> -->
+
+    <arg name="agent_name_mobile_1" default="openshelf_1"/>
+    <arg name="agent_name_mobile_2" default="openshelf_2"/>
+    <arg name="agent_name_dog_1" default="a1"/>
+    <arg name="rviz" default="true"/>
+
+    <!--   <param name="agent_name" type="string" value="$(arg agent_name)" /> -->
+    <!-- hard and soft task parameters -->
+    <rosparam command="load" file="$(find ltl_automaton_planner)/config/ltl_formula_final_2.yaml" />
+
+    <!-- Transition system for mobile robot-->
+    <param name="transition_system_mobile_1_textfile" type="str" textfile="$(find ltl_automaton_planner)/config/ts_delivery.yaml" />
+
+    <!-- Transition system for mobile robot-->
+    <param name="transition_system_mobile_2_textfile" type="str" textfile="$(find ltl_automaton_planner)/config/ts_wassi.yaml" />
+
+    <!-- Transition system for quadruped-->
+    <param name="transition_system_quadruped_textfile" type="str" textfile="$(find ltl_automaton_planner)/config/ts_quadruped.yaml" />
+    <!-- Run planner node -->
+    <!--  <node name="ltl_planner" pkg="ltl_automaton_planner" type="planner_node.py" output="screen">--> -->
+    <!--    <param name="initial_ts_state_from_agent" type="bool" value="$(arg initial_ts_state_from_agent)" />--> -->
+    <!--  </node>--> -->
+
+    <!-- Run planner node -->
+<!--    <node name="ltl_planner" pkg="ltl_automaton_planner" type="multi_robot_planner_node.py" output="screen">-->
+<!--        <param name="initial_ts_state_from_agent" type="bool" value="$(arg initial_ts_state_from_agent)" />-->
+<!--    </node>-->
+
+
+</launch>
