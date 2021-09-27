@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Robot constants and properties -->
+  <xacro:include filename="$(find ubtna_mobile_description)/urdf/iserve_delivery7_properties.xacro" />
+  <xacro:macro name="link_wheel" params="name">
+      <link name="${name}">
+            <inertial>
+              <mass value="5"/>
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+            </inertial>
+            <collision name="link_right_wheel_collision">
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <geometry>
+                <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+              </geometry>
+            </collision>
+      <surface>
+        <friction>
+          <ode>
+            <mu>10</mu>
+            <mu2>10</mu2>
+          </ode>
+        </friction>
+      </surface>
+            <visual name="${name}_visual">
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <geometry>
+                <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+              </geometry>
+            </visual>
+        </link>
+    </xacro:macro>
+ 
+    <xacro:macro name="joint_wheel" params="name child origin_xyz">
+      <joint name="${name}" type="continuous">
+        <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+        <child link="${child}"/>
+        <parent link="base_footprint"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="10000" velocity="2"/>
+        <joint_properties damping="0.1" friction="0.1"/>
+      </joint>
+    </xacro:macro>
+
+    <xacro:macro name="cylinder_inertia" params="mass r l"> 
+    <inertia ixx="${mass*(3*r*r+l*l)/12}" ixy = "0" ixz = "0"
+                iyy="${mass*(3*r*r+l*l)/12}" iyz = "0" izz="${mass*(r*r)/2}" /> 
+  </xacro:macro>
+
+ 
+</robot>

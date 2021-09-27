@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="agent_name" default="wassi"/>
+  <arg name="run_mocap" default="false" />
+  <arg name="odom_frame_id"   default="$(arg agent_name)/odom"/>
+  <arg name="base_frame_id"   default="$(arg agent_name)/base_footprint"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="world_name" default="mrdc"/>
+  <arg name="frame_prefix" default=""/>
+  <arg name="rviz" default="false"/>
+  <arg name="local_planner" default="base"/>
+  <arg name="launch_map" default="true"/>
+
+  <!-- Run Simulated mocap -->
+  <group if="$(arg run_mocap)">
+    <include file="$(find mocap_simulator)/launch/qualisys_simulator.launch" />
+    <!-- Generates transform from map to odom frame using pose from mocap -->
+    <remap from="base_pose_ground_truth" to="/qualisys/$(arg agent_name)/odom" />
+  </group>
+
+  <!-- Run the map server with the desired map -->
+  <group if="$(arg launch_map)">
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find wassi7_navigation)/maps/$(arg world_name).yaml"/>
+  </group>
+  <!-- Generates transform from map to odom frame using pose from mocap -->
+  <!--   <remap from="base_pose_ground_truth" to="/qualisys/$(arg agent_name)_gazebo/odom" /> -->
+  
+  <node pkg="fake_localization" type="fake_localization" respawn="false" name="$(arg agent_name)_mocap_localization" output="screen">
+    <remap from="base_pose_ground_truth" to="$(arg agent_name)/odom" />
+    <param name="odom_frame_id" value="$(arg odom_frame_id)"/>
+    <param name="base_frame_id" value="$(arg base_frame_id)"/>
+    <param name="global_frame_id" value="$(arg global_frame_id)"/>
+  </node>
+ 
+  <include file="$(find openshelf7_navigation)/launch/move_base.launch" >
+    <arg name="odom_frame_id"   value="$(arg odom_frame_id)"/>
+    <arg name="base_frame_id"   value="$(arg base_frame_id)"/>
+    <arg name="global_frame_id" value="$(arg global_frame_id)"/>
+    <arg name="local_planner" value="$(arg local_planner)"/>
+    <arg name="robot_name" value="$(arg agent_name)" />
+  </include>
+
+  <!-- Run a static transform -->
+  <node pkg="tf" type="static_transform_publisher" name="$(arg agent_name)_odom_map_broadcaster" args="0 0 0 0 0 0 $(arg global_frame_id) $(arg odom_frame_id) 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="$(arg agent_name)_odom_footprint_broadcaster" args="0 0 0 0 0 0 /$(arg agent_name) $(arg base_frame_id) 100" />
+
+
+  <!-- Launch rviz -->
+  <!-- <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+            args="-d $(find unitree_navigate)/rviz/mocap.rviz -f $(arg frame_prefix)map"
+            output="screen"/> -->
+</launch>

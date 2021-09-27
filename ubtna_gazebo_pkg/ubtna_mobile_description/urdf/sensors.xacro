@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+
+<!-- 
+
+  http://wiki.ros.org/navigation/Tutorials
+
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <!-- Robot constants and properties -->
+  <xacro:include filename="$(find ubtna_mobile_description)/urdf/iserve_trl7_properties.xacro" />
+  <!-- Inertia matrices -->
+  <xacro:include filename="$(find ubtna_mobile_description)/urdf/macros.xacro" />
+  <!-- Gazebo aspects of the robot -->
+  <xacro:include filename="$(find ubtna_mobile_description)/urdf/iserve_trl7.gazebo" />
+
+
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <geometry>
+        <box size="${cameraLength} 
+                   ${cameraWidth} 
+                   ${cameraHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <geometry>
+        <box size="${cameraLength} 
+                   ${cameraWidth} 
+                   ${cameraHeight}"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <inertial>
+      <mass value="${cameraMass}" />
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <box_inertia m="${cameraMass}" 
+                   x="${cameraLength}" 
+                   y="${cameraWidth}" 
+                   z="${cameraHeight}" />
+    </inertial>
+
+  </link>
+
+
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="${cameraOffsetX} 0 ${cameraOffsetZ}" 
+            rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="camera_link"/>
+  </joint>
+
+
+  <joint name="hokuyo_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="${hokuyoOffsetX} 0 ${hokuyoOffsetZ}" 
+            rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="hokuyo_link"/>
+  </joint>
+
+
+  <!-- Hokuyo Laser -->
+  <link name="hokuyo_link">
+    <collision>
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <geometry>
+        <box size="${hokuyoLength} 
+                   ${hokuyoWidth} 
+                   ${hokuyoHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://ubtna_mobile_description/meshes/hokuyo.dae"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="${hokuyoMass}" />
+      <origin xyz="0 0 0" 
+              rpy="0 0 0"/>
+      <box_inertia 
+        m="${hokuyoMass}" 
+        x="${hokuyoLength}" 
+        y="${hokuyoWidth}" 
+        z="${hokuyoHeight}"/>
+    </inertial>
+
+  </link>
+
+</robot>

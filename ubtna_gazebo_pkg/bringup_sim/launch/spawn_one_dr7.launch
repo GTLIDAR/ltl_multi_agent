@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" default="dr_0" />
+  <arg name="pose_x" default="0" />
+  <arg name="pose_y" default="0" />
+  <arg name="init_yaw" default="0.0"/>
+
+  <group ns="$(arg robot_name)">
+    <param name="tf_prefix" value="$(arg robot_name)" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find ubtna_mobile_description)/urdf/iserve_openshelf7.xacro ns:=$(arg robot_name)" />
+   <!--  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"
+        respawn="false" output="screen">
+      <!-- <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/> -->
+    </node>
+
+    <node name="spawn_dr" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-x $(arg pose_x) -y $(arg pose_y) -z 0.05 -Y $(arg init_yaw) -urdf -model $(arg robot_name) -param robot_description" />
+    
+    <!-- load the controllers -->
+    <!-- <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
+        output=" -->screen" ns="/$(arg robot_name)" args="joint_state_controller"/>
+  </group>
+</launch>

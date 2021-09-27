@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Constants -->
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<!-- Chassis properties -->
+	<xacro:property name="chassisHeight" value="0.2"/>
+	<xacro:property name="chassisRadius" value="0.2"/>
+
+	<!-- Caster wheel properties -->
+	<xacro:property name="casterRadius" value="0.05"/>
+	<xacro:property name="casterOffsetX" value="0.1"/>
+	<xacro:property name="casterOffsetZ" value="-0.029"/>
+
+	<!-- Differential-drive wheels properties -->
+	<xacro:property name="wheelWidth" value="0.02"/>
+	<xacro:property name="wheelRadius" value="0.08"/>
+	<xacro:property name="wheelOffsetY" value="0.15"/>
+
+	<!-- Hokuyo laser properties -->
+	<xacro:property name="hokuyoOffsetX" value="0.0"/>
+	<xacro:property name="hokuyoOffsetY" value="0"/>
+	<xacro:property name="hokuyoOffsetZ" value="0.233"/>
+
+</robot>

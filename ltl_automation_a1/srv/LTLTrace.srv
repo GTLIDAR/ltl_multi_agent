@@ -1,3 +1,0 @@
-int16 request               #1: ask for synchronization
----
-int16 result				#0:success, -1:false
