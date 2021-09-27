@@ -1,0 +1,7 @@
+<launch>
+    <arg name="robot_name" default="a1"/>
+    <param name="robot_name" value="$(arg robot_name)"/>
+
+    <!--<node pkg="unitree_controller" type="unitree_servo" name="unitree_servo" respawn="true"/>-->
+
+</launch>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Input parameters -->
+  <arg name="world_name" default="hospital"/>
+  <arg name="world_format" default="world"/>
+
+  <!-- Gazebo parameters-->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  
+  <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
+  <arg name="user_debug" default="false"/>
+    
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find unitree_bringup)/worlds/$(arg world_name).$(arg world_format)" />
+      <!-- arg name="world_name" value="$(find unitree_navigate)/worlds/mrdc_world.model" /-->
+      <arg name="debug" value="$(arg debug)"/>
+      <arg name="gui" value="$(arg gui)"/>
+      <arg name="paused" value="$(arg paused)"/>
+      <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+      <arg name="headless" value="$(arg headless)"/>
+      <arg name="verbose" value="false" />
+  </include>
+
+
+</launch>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="bt_navigator" type="node" name="bt_navigator" output="screen">
+        <param name="file" value="$(find bt_navigator)/bt_xml/basic_example.xml"/>
+    </node>
+
+</launch>

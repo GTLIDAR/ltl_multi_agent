@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="agent_name" default="a1_gazebo"/>
+  <arg name="run_mocap" default="true" />
+  <arg name="odom_frame_id"   default="odom"/>
+  <arg name="base_frame_id"   default="a1_gazebo"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="world_name" default="mrdc"/>
+  <arg name="frame_prefix" default=""/>
+  <arg name="rviz" default="true"/>
+  <arg name="local_planner" default="dwa"/>
+
+  <!-- Run Simulated mocap -->
+  <group if="$(arg run_mocap)">
+    <include file="$(find mocap_simulator)/launch/qualisys_simulator.launch" />
+  </group>
+
+  <!-- Run the map server with the desired map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_navigate)/maps/$(arg world_name).yaml"/>
+
+  <!-- Generates transform from map to odom frame using pose from mocap -->
+  <remap from="base_pose_ground_truth" to="/qualisys/$(arg agent_name)/odom" />
+  <node pkg="fake_localization" type="fake_localization" respawn="false" name="mocap_localization" output="screen">
+    <param name="odom_frame_id" value="$(arg odom_frame_id)"/>
+    <param name="base_frame_id" value="$(arg base_frame_id)"/>
+    <param name="global_frame_id" value="$(arg global_frame_id)"/>
+  </node>
+ 
+   <include file="$(find unitree_navigate)/launch/move_base.launch" >
+    <arg name="odom_frame_id"   value="$(arg odom_frame_id)"/>
+    <arg name="base_frame_id"   value="$(arg base_frame_id)"/>
+    <arg name="global_frame_id" value="$(arg global_frame_id)"/>
+    <arg name="local_planner" value="$(arg local_planner)"/>
+  </include>
+​
+  <!-- Run a static transform -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_map_broadcaster" args="0 0 0 0 0 0 /map /odom 100" />
+  <node pkg="tf" type="static_transform_publisher" name="robot_foot_broadcaster" args="0 0 0 0 0 0 /a1_gazebo /base_footprint 100" />
+  <node pkg="tf" type="static_transform_publisher" name="foot_base_broadcaster" args="0 0 0 0 0 0 /base_footprint /base 100" />
+
+  <!-- Run a custom controller executable to have gazebo interface subscribe to move_base and mode changes -->
+  <!-- <node name="custom_controller_node" pkg="quadruped_ctrl" type="custom_controller"/> -->
+
+  <!-- Run a node for nav_msgs/Odometry to geometry_msgs/PoseWithCovarianceStamped transformer -->
+  <!-- <node name="odom_to_pose_node" pkg="quadruped_ctrl" type="odom_to_pose" /> -->
+
+  <!-- Launch rviz -->
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+            args="-d $(find unitree_navigate)/rviz/mocap.rviz -f $(arg frame_prefix)map"
+            output="screen"/>
+
+</launch>

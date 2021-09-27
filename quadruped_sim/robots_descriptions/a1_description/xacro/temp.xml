@@ -1,0 +1,34 @@
+    <gazebo reference="${name}">
+        <sensor name="laser" type="ray">
+        <pose>0 0 0 0 0 0</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <!-- The URG-04LX-UG01  has  683 steps with 0.35139 Degree resolution -->
+                <resolution>1</resolution>
+                <max_angle>3.14159</max_angle> <!-- 180 Degree -->
+                <min_angle>-3.14159</min_angle> <!-- -180 Degree -->
+                <samples>1440</samples>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.3</min>
+              <max>15.0</max>
+              <resolution>0.01</resolution>
+            </range>
+          </ray>
+          
+          <plugin name="laser" filename="libgazebo_ros_laser.so" >
+            <robotNamespace></robotNamespace>
+            <topicName>/scan</topicName>
+            <frameName>laser</frameName>
+          </plugin>
+          <!--
+          <plugin name="laser" filename="libRayPlugin.so" />
+          -->
+          
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>        
+        </sensor>
+    </gazebo>

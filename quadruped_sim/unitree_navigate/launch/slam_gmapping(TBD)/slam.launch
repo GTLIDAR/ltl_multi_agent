@@ -1,0 +1,25 @@
+<launch>
+    <arg name="robot_name" default="/"/>
+    <arg name="rviz"       default="false"/>
+    <arg name="local_planner" default="dwa"/>
+    
+    <arg if="$(eval arg('robot_name') == '/')"  name="frame_prefix" value="" />
+    <arg unless="$(eval arg('robot_name') == '/')" name="frame_prefix" value="$(arg robot_name)/" />
+
+    <group ns="$(arg robot_name)">
+        <include file="$(find unitree_navigate)/launch/gmapping.launch">
+            <arg name="frame_prefix" value="$(arg frame_prefix)"/>
+        </include>
+
+        <!-- Calls navigation stack packages -->
+        <include file="$(find unitree_navigate)/launch/move_base.launch">
+            <arg name="frame_prefix" value="$(arg frame_prefix)"/>
+            <arg name="robot_name"   value="$(arg robot_name)"/>
+            <arg name="local_planner" value="$(arg local_planner)"/>
+        </include>
+
+        <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+            args="-d $(find unitree_navigate)/rviz/navigate.rviz -f $(arg frame_prefix)map"
+            output="screen"/>
+    </group>
+</launch>

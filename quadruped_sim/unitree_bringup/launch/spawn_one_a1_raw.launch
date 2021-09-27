@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" default="a1_gazebo" />
+  <arg name="pose_x" default="0" />
+  <arg name="pose_y" default="0" />
+  <arg name="pose_z" default="0.6" />
+  <arg name="init_yaw" default="0.0"/>
+  <arg name="debug" default="false"/>
+
+  
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"
+        respawn="false" output="screen">
+      <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
+  </node>
+
+  
+  <!-- Load the XACRO/URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro --inorder '$(find a1_description)/xacro/robot_raw.xacro' 
+         DEBUG:=$(arg debug)
+         "/>
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <!-- Set trunk and joint positions at startup -->
+  <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" respawn="false" output="screen"
+        args="-urdf -x $(arg pose_x) -y $(arg pose_y) -z $(arg pose_z) -Y $(arg init_yaw) -model $(arg robot_name) -param robot_description -unpause"/>
+
+  <!-- Load joint PID controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find a1_description)/config/robot_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
+        output="screen" ns="/$(arg robot_name)" args="joint_state_controller
+        FL_hip_controller FL_thigh_controller FL_calf_controller
+        FR_hip_controller FR_thigh_controller FR_calf_controller
+        RL_hip_controller RL_thigh_controller RL_calf_controller
+        RR_hip_controller RR_thigh_controller RR_calf_controller "/>
+
+</launch>

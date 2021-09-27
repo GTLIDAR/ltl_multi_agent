@@ -1,0 +1,3 @@
+[submodule "A1_ROS"]
+	path = A1_ROS
+	url = https://github.gatech.edu/GeorgiaTechLIDARGroup/A1_ROS

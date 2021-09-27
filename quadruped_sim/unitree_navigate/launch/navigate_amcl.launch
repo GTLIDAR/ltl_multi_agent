@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="agent_name" default="a1_gazebo"/>
+  <arg name="robot_name" default="a1"/>
+  <arg name="frame_prefix" default=""/>
+  <arg name="world_name" default="mrdc"/>
+
+  <arg name="odom_frame_id"   default="odom"/>
+  <arg name="base_frame_id"   default="base_footprint"/>
+  <arg name="global_frame_id" default="map"/>
+  
+  <arg name="rviz" default="true"/>
+  <arg name="local_planner" default="dwa"/>
+
+  <!-- Publish the odom from minicheetah state estimation & subscribe to cmd_vel -->
+  <node name="odom_publisher" pkg="quadruped_ctrl" type="custom_state_publisher" />
+  <node name="custom_controller" pkg="quadruped_ctrl" type="custom_controller"/>
+
+  <!-- Run a static transform -->
+  <node pkg="tf" type="static_transform_publisher" name="foot_base_broadcaster" args="0 0 0 0 0 0 /base_footprint /base 100" />
+
+  <!-- Run the map server with the desired map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_navigate)/maps/$(arg world_name).yaml"/>
+
+  <include file="$(find unitree_navigate)/launch/move_base.launch" >
+    <arg name="odom_frame_id"   value="$(arg odom_frame_id)"/>
+    <arg name="base_frame_id"   value="$(arg base_frame_id)"/>
+    <arg name="global_frame_id" value="$(arg global_frame_id)"/>
+    <arg name="local_planner" value="$(arg local_planner)"/>
+  </include>
+
+
+  <!-- AMCL used for localization -->
+  <include file="$(find unitree_navigate)/launch/amcl.launch">
+    <arg name="frame_prefix" value="$(arg frame_prefix)"/>
+    <arg name="base_frame_id" value="$(arg base_frame_id)"/> 
+  </include>
+
+  <!-- LAMA Localization -->
+  <!--include file="$(find iris_lama_ros)/launch/loc2d.launch">
+      <arg name="initial_pose_x" value="0.0"/>
+      <arg name="initial_pose_y" value="0.0"/>
+      <arg name="initial_yaw"  value="1.57"/>
+  </include-->
+        
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+      args="-d $(find unitree_navigate)/rviz/navigate.rviz -f $(arg frame_prefix)map" output="screen"/>
+</launch>

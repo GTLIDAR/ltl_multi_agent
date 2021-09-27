@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Input parameters -->
+  <arg name="robot_name" default="a1"/>
+  <arg name="world_name" default="mrdc"/>
+  <arg name="world_format" default="model"/>
+  <arg name="init_x" default="0.0"/>
+  <arg name="init_y" default="0.0"/>
+  <arg name="init_z" default="0.6"/>
+  <arg name="init_yaw" default="0.0"/>
+  <arg name="frame_prefix" default=""/>
+  <arg name="rviz" default="true"/>
+
+  <arg name="robot_path" value="(find $(arg robot_name)_description)"/>
+  <arg name="dollar" default="$"/>
+
+  <!-- Gazebo parameters-->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  
+  <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
+  <arg name="user_debug" default="false"/>
+    
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find unitree_navigate)/worlds/$(arg world_name).$(arg world_format)" />
+      <!-- arg name="world_name" value="$(find unitree_navigate)/worlds/mrdc_world.model" /-->
+      <arg name="debug" value="$(arg debug)"/>
+      <arg name="gui" value="$(arg gui)"/>
+      <arg name="paused" value="$(arg paused)"/>
+      <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+      <arg name="headless" value="$(arg headless)"/>
+      <arg name="verbose" value="true" />
+  </include>
+  
+
+  <include file="$(find unitree_bringup)/launch/spawn_one_a1.launch">
+      <arg name="robot_name" value="a1" />
+      <arg name="pose_x" value="0.0" />
+      <arg name="pose_y" value="0" />
+      <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <include file="$(find bringup_sim)/launch/spawn_one_openshelf7.launch">
+      <arg name="robot_name" value="openshelf_0" />
+      <arg name="pose_x" value="1.0" />
+      <arg name="pose_y" value="0" />
+  </include>
+
+  <include file="$(find openshelf7_navigation)/launch/navigate_mocap.launch">
+      <arg name="agent_name" value="openshelf_0" />
+  </include>
+
+  <include file="$(find bringup_sim)/launch/spawn_one_openshelf7.launch">
+      <arg name="robot_name" value="openshelf_1" />
+      <arg name="pose_x" value="2.0" />
+      <arg name="pose_y" value="0" />
+  </include>
+
+
+</launch>

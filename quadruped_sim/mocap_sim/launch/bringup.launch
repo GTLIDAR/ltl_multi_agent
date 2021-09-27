@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Run the gazebo world-->
+  <include file="$(find unitree_bringup)/launch/gazebo.launch">
+    <arg name="world_name" value="earth"/>
+    <arg name="world_format" value="world"/>
+  </include>
+
+  <!-- Spawn robots-->
+  <include file="$(find unitree_bringup)/launch/spawn_one_a1_raw.launch">
+    <arg name="robot_name" value="a1_gazebo" />
+    <arg name="pose_x" value="0.0" />
+    <arg name="pose_y" value="0.0" />
+    <arg name="init_yaw" value="3.14" />
+    <arg name="debug" value="false"/>
+  </include>
+
+</launch>

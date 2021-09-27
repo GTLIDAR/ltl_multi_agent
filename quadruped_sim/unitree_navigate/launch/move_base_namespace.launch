@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="frame_prefix" default=""/> <!-- unused for now -->
+    <arg name="robot_name" default=""/> <!-- unused for now -->
+    <arg name="odom_frame_id"   default="odom"/>
+    <arg name="base_frame_id"   default="a1_gazebo"/>
+    <arg name="global_frame_id" default="map"/>
+    <arg name="local_planner" default="base"/>
+
+    <group ns="$(arg robot_name)">
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+            <rosparam file="$(find unitree_navigate)/params_mocap/costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find unitree_navigate)/params_mocap/costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find unitree_navigate)/params_mocap/local_costmap_params.yaml" command="load" />
+            <rosparam file="$(find unitree_navigate)/params_mocap/global_costmap_params.yaml" command="load" />
+            <rosparam file="$(find unitree_navigate)/params_mocap/move_base_params.yaml" command="load" />
+            <rosparam file="$(find unitree_navigate)/params_mocap/$(arg local_planner)_local_planner_params.yaml"   command="load" />
+            <!-- rosparam file="$(find unitree_navigate)/params_mocap/global_planner_params.yaml" command="load" /-->
+
+            <!-- explicitly define frame ids for movebase -->
+            <param name="global_costmap/global_frame"                   value="$(arg global_frame_id)"/>
+            <param name="global_costmap/robot_base_frame"               value="$(arg base_frame_id)"/>
+            <param name="global_costmap/obstacles_layer/scan/topic"  value="/scan"/>
+            <param name="global_costmap/3d_obstacles_layer/depth/topic" value="camera/depth/points"/>
+            <param name="local_costmap/global_frame"                    value="$(arg odom_frame_id)"/>
+            <param name="local_costmap/robot_base_frame"                value="$(arg base_frame_id)"/>
+            <param name="local_costmap/obstacles_layer/scan/topic"   value="/scan"/>
+            <param name="local_costmap/3d_obstacles_layer/depth/topic"  value="camera/depth/points"/>
+
+            <!-- Centralized map server -->
+            <remap from="map" to="/map"/>
+        </node>
+    </group>>
+</launch>

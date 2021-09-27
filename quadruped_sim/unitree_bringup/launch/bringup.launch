@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" value="a1"/>
+  <arg name="world_name" default="hospital"/>
+  <arg name="world_format" default="world"/>
+  <arg name="init_x" default="0.0"/>
+  <arg name="init_y" default="0.0"/>
+  <arg name="init_z" default="0.6"/>
+  <arg name="init_yaw" default="3.14"/>
+  <arg name="frame_prefix" default=""/>
+  
+  <!-- Launch the robot within the gazebo world -->
+<!--   <include file="$(find unitree_bringup)/launch/multi_robot_test.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="world_format" value="$(arg world_format)"/>
+    <arg name="init_x" value="$(arg init_x)"/>
+    <arg name="init_y" value="$(arg init_y)"/>
+    <arg name="init_z" value="$(arg init_z)"/>
+    <arg name="init_yaw" value="$(arg init_yaw)"/>
+  </include> -->
+
+  <!-- Launch the robot within the gazebo world -->
+  <include file="$(find unitree_bringup)/launch/unitree_spawn.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="world_format" value="$(arg world_format)"/>
+    <arg name="init_x" value="$(arg init_x)"/>
+    <arg name="init_y" value="$(arg init_y)"/>
+    <arg name="init_z" value="$(arg init_z)"/>
+    <arg name="init_yaw" value="$(arg init_yaw)"/>
+  </include>
+
+</launch>
