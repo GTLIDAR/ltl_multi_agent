@@ -1,0 +1,6 @@
+[submodule "ltl_planning_core"]
+	path = ltl_planning_core
+	url = https://github.com/zzhou387/ltl_planning_core
+[submodule "ltl_automation_a1"]
+	path = ltl_automation_a1
+	url = https://github.com/zzhou387/ltl_automation_a1
