@@ -29,7 +29,7 @@ This repo ONLY contains the quadruped_sim part of the below tree, which is a gaz
 
 
 # Step 1: Setting Up Dependencies At Home Directory
-Before using this package, please make sure to have `ltl_supported` branch of [Cheetah-Software](https://github.gatech.edu/GeorgiaTechLIDARGroup/Cheetah-Software) built on your environment. You will need to download and install pyQt5, LCM, Eigen, and couple other dependencies for this step. Refer to the components structure diagram above to finish setting up the dependencies at your home directory. More details are provided at the link to Cheetah-Software. For more information on how the WBIC + Convec MPC works, please refer to [this paper](https://arxiv.org/pdf/1909.06586.pdf). 
+Before using this package, please make sure to have `ltl_supported` branch of [Cheetah-Software](https://github.com/GTLIDAR/Cheetah-Software) built on your environment. You will need to download and install pyQt5, LCM, Eigen, and couple other dependencies for this step. Refer to the components structure diagram above to finish setting up the dependencies at your home directory. More details are provided at the link to Cheetah-Software. For more information on how the WBIC + Convec MPC works, please refer to [this paper](https://arxiv.org/pdf/1909.06586.pdf). 
 
 # Step 2: Setting Up Your catkin_ws
 Your catkin_ws will consist of this repo, iris_lama & iris_lama_ros repo for SLAM, and BehaviorTree.CPP & Groot for BT implementation. Please `$ git clone` appropriate repos & braches into your `catkin_ws/src`.

@@ -6,9 +6,9 @@ This repo is for A1 gazebo simulation.
 Ubuntu 18.04, ROS Mellodic (tested by Ziyi 23/06/2021) 
 
 ### Dependency:
-* [unitree_ros](https://github.com/unitreerobotics/unitree_ros)
+* [unitree_ros](https://github.com/unitreerobotics/unitree_ros) (you don't need this if you are under quadruped_sim)
 
-* [Cheetah-Software](https://github.gatech.edu/GeorgiaTechLIDARGroup/Cheetah-Software) (checkout to gazebo_supported branch)
+* [Cheetah-Software](https://github.com/GTLIDAR/Cheetah-Software) (checkout to ltl_supported branch)
 
 ROS joy for gamepad control (TBD)
 

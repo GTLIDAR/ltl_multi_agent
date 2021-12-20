@@ -1,7 +1,7 @@
 # Reactive task allocation and planning of a heterogeneous multi-robot system
 ## Overview
 This repo contains all the packages for multi-agent task allocation and planning based on Linear Temporal Logic (LTL). 
-Each component is maintained individually.
+Each component is maintained individually. To run the simulation, ROS melodic and gazebo11 are suggested.
 
 ## Packages
 This metapackage is composed of the following packages.
@@ -10,7 +10,7 @@ This metapackage is composed of the following packages.
 
 - **[ltl_automation_a1](/ltl_automation_a1)**: Behavior tree nodes for online task execution. Quadruped and wheeled robots are both included.
 
-- **[quadruped_sim](/quadruped_sim)**: Essential components for quadruped including Gazebo simulation, navigation, and low-level control. 
+- **[quadruped_sim](/quadruped_sim)**: Essential components for quadruped including Gazebo simulation, navigation, and low-level control. Make sure you have [Cheetah-Software](https://github.com/GTLIDAR/Cheetah-Software) installed before building the package.
 
 - **[motion_capture_simulator](/motion_capture_simulator)**:
 
@@ -27,6 +27,7 @@ All packages shall be located in the same catkin workspace. To build the package
 $ cd catkin_ws/src
 $ git clone https://github.com/GTLIDAR/ltl_multi_agent
 $ cd ..
+$ rosdep install --from-paths src --ignore-src -r -y
 $ catkin build
 $ source devel/setup.bash
 ```
