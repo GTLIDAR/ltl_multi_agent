@@ -7,14 +7,14 @@ This repo has been built and tested on both Ubuntu 20.04 / 18.04 with ROS Noetic
 # Components
 This repo ONLY contains the quadruped_sim part of the below tree, which is a gazebo & ROS interface to the minicheetah controller and the navigation stack setup. Your home directory should contain the following.
 
-* your_ws
+* your_ws (see an example for multi-robot LTL application in [ltl_multi_agent](https://github.com/GTLIDAR/ltl_multi_agent))
     * src
         * [quadruped_sim](https://github.gatech.edu/GeorgiaTechLIDARGroup/quadruped_sim) - THIS REPO
         * [motion_capture_simulator](https://github.com/KTH-SML/motion_capture_simulator) - MUST (for localization)
         * [BehaviorTree.CPP](https://github.com/BehaviorTree/BehaviorTree.CPP) (optional)
         * [Groot](https://github.com/BehaviorTree/Groot) (optional)
 
-* Cheetah-Software <gazebo-supported>
+* Cheetah-Software <ltl-supported>
     * build
     * ... etc
 * LCM
@@ -26,7 +26,6 @@ This repo ONLY contains the quadruped_sim part of the below tree, which is a gaz
 * aliengo_sdk
     * build
     * ... etc
-* QT
 
 
 # Step 1: Setting Up Dependencies At Home Directory
@@ -38,7 +37,7 @@ Your catkin_ws will consist of this repo, iris_lama & iris_lama_ros repo for SLA
 ## Sub Packages Within Your quadruped_sim:
 Robot descriptions: `a1_description`, `aliengo_description`, `laikago_description`
 
-Robot and joints controller: `unitree_controller`, `minicheetah_controller`
+Robot and joints controller: `unitree_controller`, `quadruped_ctrl`
 
 Basic function: `unitree_legged_msgs`
 
@@ -48,22 +47,20 @@ Real robot control related: `unitree_legged_real`
 
 Plugins: `ouster_gazebo_plugins`, `velodyne_gazebo_plugins`
 
-Behavior-tree related: `bt_navigator`
-
 
 # Step 3: Build
 ```
 $ cd catkin_ws
-$ catkin config --extend /opt/ros/noetic
+$ catkin config --extend /opt/ros/melodic
 $ catkin build
 $ source ./devel/setup.bash
 ```
-If the build fails due to `unitree_legged_msgs/LowCmd.h: No such file or directory` error, try to compile everything except `minicheetah_controller` package first, then paste the folder back into the `quadruped_sim` to recompile.
+If the build fails due to `unitree_legged_msgs/LowCmd.h: No such file or directory` error, try to compile everything except `quadruped_ctrl` package first.
 
 # Step 4: Quick Demo
 On terminal 1, launch the robot into your gazebo world, initiate move_base, localization, and rviz. 
 ```
-$ roslaunch unitree_bringup bringup.launch world_name:=mrdc_map world_format:=model
+$ roslaunch unitree_bringup bringup.launch world_name:=mrdc world_format:=model
 ```
 
 On terminal 2, trigger the a1's standup motion to start the robot. Without this step, the robot won't be able to move around.
@@ -73,14 +70,16 @@ $ rosrun quadruped_ctrl a1_servo
 ![Standup Example](https://github.com/GTLIDAR/ltl_multi_agent/blob/master/quadruped_sim/figures/standup.gif)
 ![Navigation Example](https://github.com/GTLIDAR/ltl_multi_agent/blob/master/quadruped_sim/figures/success.gif)
 
-On terminal 3, launch the localizaition, move_base, and rviz for navigation. You can choose to use mocap result for odom (groud truth) or use amcl for laser localization. Currently, using the mocap's localization is recommended due to lack of tuning on amcl.
+On terminal 3, change the control mode to be `2` (locomotion):
+```
+$ roslaunch unitree_navigate navigate_mocap.launch 
+$ roslaunch unitree_navigate navigate_amcl.launch
+$ rosservice call /ControlMode 2
+```
+You will see A1 start to walk in place.
+
+On terminal 4, launch the localizaition, move_base, and rviz for navigation. You can choose to use mocap result for odom (groud truth) or use amcl for laser localization. Currently, using the mocap's localization is recommended due to lack of tuning on amcl.
 ```
 $ roslaunch unitree_navigate navigate_mocap.launch 
 $ roslaunch unitree_navigate navigate_amcl.launch
 ```
-
-On termianl 4, launch the BT example to move between different waypoints
-$ roslaunch bt_navigator bt_basic.launch 
-```
-
-
