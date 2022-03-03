@@ -7,9 +7,6 @@
 [submodule "Groot"]
 	path = Groot
 	url = https://github.com/BehaviorTree/Groot
-[submodule "motion_capture_simulator"]
-	path = motion_capture_simulator
-	url = https://github.com/KTH-SML/motion_capture_simulator
 [submodule "ros_ltl2ba"]
 	path = ros_ltl2ba
 	url = https://github.com/KTH-DHSG/ros_ltl2ba
