@@ -1,4 +1,4 @@
-# Reactive task allocation and planning of a heterogeneous multi-robot system
+# Reactive Task Allocation and Planning for Quadrupedal and Wheeled Robot Teaming
 ## Overview
 This repo contains all the packages for multi-agent task allocation and planning based on Linear Temporal Logic (LTL). 
 Each component is maintained individually. To run the simulation, ROS melodic and gazebo11 are suggested.
@@ -20,7 +20,7 @@ This metapackage is composed of the following packages.
  
 
 ## Installation
-Before building the whole workspace, please follow the instructions in each subpackage above to install required dependencies.
+Before building the whole workspace, make sure `quadruped_ctrl` package is built successfully which is inside quadruped_sim folder.
 
 All packages shall be located in the same catkin workspace. To build the packages, follow:
 ```
@@ -56,8 +56,8 @@ $ rosrun ltl_automaton_planner robot_planner_node_exp
 To cite this work:
 ```
 @article{zhou2021reactive,
-  title={Reactive Task Allocation and Planning of A Heterogeneous Multi-Robot System},
-  author={Zhou, Ziyi and Lee, Dong Jae and Yoshinaga, Yuki and Guo, Dejun and Zhao, Ye},
+  title={Reactive Task Allocation and Planning for Quadrupedal and Wheeled Robot Teaming},
+  author={Zhou, Ziyi and Lee, Dong Jae and Yoshinaga, Yuki and Balakirsky, Stephen and Guo, Dejun and Zhao, Ye},
   journal={arXiv e-prints},
   pages={arXiv--2110},
   year={2021}

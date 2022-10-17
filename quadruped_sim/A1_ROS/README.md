@@ -1,7 +1,7 @@
 # A1_ros for Gazebo interface
 
 ### A1 simulation in gazebo with MIT Controller
-This repo is for A1 gazebo simulation.
+This repo is for A1 gazebo simulation and directly linked to Cheetah-Software.
 ### System requirements:
 Ubuntu 18.04, ROS Mellodic (tested by Ziyi 23/06/2021) 
 
@@ -10,7 +10,6 @@ Ubuntu 18.04, ROS Mellodic (tested by Ziyi 23/06/2021)
 
 * [Cheetah-Software](https://github.com/GTLIDAR/Cheetah-Software) (checkout to ltl_supported branch)
 
-ROS joy for gamepad control (TBD)
 
 ### Build
 First add your Cheetah-Software path into bashrc:
