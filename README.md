@@ -25,7 +25,7 @@ Before building the whole workspace, make sure `quadruped_ctrl` package is built
 All packages shall be located in the same catkin workspace. To build the packages, follow:
 ```
 $ cd catkin_ws/src
-$ git clone https://github.com/GTLIDAR/ltl_multi_agent
+$ git clone --recurse-submodules https://github.com/GTLIDAR/ltl_multi_agent
 $ cd ..
 $ rosdep install --from-paths src --ignore-src -r -y
 $ catkin build
@@ -55,12 +55,13 @@ $ rosrun ltl_automaton_planner robot_planner_node_exp
 ## Reference Citation
 To cite this work:
 ```
-@article{zhou2021reactive,
+@inproceedings{zhou2022reactive,
   title={Reactive Task Allocation and Planning for Quadrupedal and Wheeled Robot Teaming},
   author={Zhou, Ziyi and Lee, Dong Jae and Yoshinaga, Yuki and Balakirsky, Stephen and Guo, Dejun and Zhao, Ye},
-  journal={arXiv e-prints},
-  pages={arXiv--2110},
-  year={2021}
+  booktitle={2022 IEEE 18th International Conference on Automation Science and Engineering (CASE)},
+  pages={2110--2117},
+  year={2022},
+  organization={IEEE}
 }
 ```
 
